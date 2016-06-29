@@ -4,6 +4,8 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/VAnimator.iml" filepath="$PROJECT_DIR$/VAnimator.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/vanimator/vanimator.iml" filepath="$PROJECT_DIR$/vanimator/vanimator.iml" />
+      <module fileurl="file://$PROJECT_DIR$/vanimator2/vanimator2.iml" filepath="$PROJECT_DIR$/vanimator2/vanimator2.iml" />
     </modules>
   </component>
 </project>

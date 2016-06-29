@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <declare-styleable name="CarAddView">
+        
+        <attr name="anim_layout" format="integer"></attr>
+        <attr name="anim_time" format="integer"></attr>
+        
+    </declare-styleable>
+    
+</resources>

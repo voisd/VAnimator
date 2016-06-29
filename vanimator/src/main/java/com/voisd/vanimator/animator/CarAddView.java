@@ -10,12 +10,14 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
+
 import com.voisd.vanimator.R;
 import com.voisd.vanimator.cartanim.BezierEvaluator;
+import com.voisd.vanimator.utils.WindowsUtil;
 
 
 /**
- * Created by jm on 2016/6/28.
+ * Created by voisd on 2016/6/28.
  */
 public class CarAddView extends FrameLayout {
 
@@ -23,6 +25,7 @@ public class CarAddView extends FrameLayout {
     View mView;
     PointF startPointF,overPointF;
     int[] location = new int[2];
+    int statusHeight = 0;
 
     AnimatorSet animatorSet;
 
@@ -43,7 +46,7 @@ public class CarAddView extends FrameLayout {
 
     public void init(Context context, AttributeSet attrs, int defStyleAttr){
         this.context = context;
-
+        statusHeight = WindowsUtil.getStatusHeight(context);
     }
 
 
@@ -65,7 +68,6 @@ public class CarAddView extends FrameLayout {
         if(animatorSet!=null){
             animatorSet.end();
         }
-
     }
 
 
@@ -75,18 +77,109 @@ public class CarAddView extends FrameLayout {
      * @param rId  layout ID  default -1
      * @param animTime  time
      * */
-    public CarAddView setAnim(View startView,View overView,int rId,int animTime){
+    public CarAddView setAnimInWindow(View startView,View overView,int rId,int animTime){
+        setAnimView(rId);
 
         animatorSet  = new AnimatorSet();
 
+        startView.getLocationInWindow(location);
+        startPointF = new PointF(location[0],location[1]);
+        overView.getLocationInWindow(location);
+        overPointF = new PointF(location[0],location[1]);
+        setAnim(animTime,false);
+        return this;
+    }
+
+    /**
+     * @param startView start location
+     * @param overView over location
+     * @param rId  layout ID  default -1
+     * @param animTime  time
+     * */
+    public CarAddView setAnimInWindowSystemBar(View startView,View overView,int rId,int animTime){
         setAnimView(rId);
+
+        statusHeight = WindowsUtil.getStatusHeight(context);
+        animatorSet  = new AnimatorSet();
 
         startView.getLocationInWindow(location);
         startPointF = new PointF(location[0],location[1]);
-
         overView.getLocationInWindow(location);
         overPointF = new PointF(location[0],location[1]);
+        setAnim(animTime,true);
+        return this;
+    }
 
+    /**
+     * @param startView start location
+     * @param overView over location
+     * @param rId  layout ID  default -1
+     * @param animTime  time
+     * */
+
+    public CarAddView setAnimScreenSystemBar(View startView,View overView,int rId,int animTime){
+
+        setAnimView(rId);
+
+        animatorSet  = new AnimatorSet();
+
+        startView.getLocationOnScreen(location);
+        startPointF = new PointF(location[0],location[1]);
+        overView.getLocationOnScreen(location);
+        overPointF = new PointF(location[0],location[1]);
+
+        setAnim(animTime,true);
+        return this;
+    }
+
+    /**
+     * @param startView start location
+     * @param overView over location
+     * @param rId  layout ID  default -1
+     * @param animTime  time
+     * */
+
+    public CarAddView setAnimScreen(View startView,View overView,int rId,int animTime){
+
+        setAnimView(rId);
+
+        animatorSet  = new AnimatorSet();
+
+        startView.getLocationOnScreen(location);
+        startPointF = new PointF(location[0],location[1]);
+        overView.getLocationOnScreen(location);
+        overPointF = new PointF(location[0],location[1]-statusHeight);
+
+        setAnim(animTime,false);
+        return this;
+    }
+
+    /**
+     * @param startPointF start location
+     * @param overPointF over location
+     * @param rId  layout ID  default -1
+     * @param animTime  time
+     * */
+
+    public CarAddView setAnimPointF(PointF startPointF,PointF overPointF,int rId,int animTime){
+
+        setAnimView(rId);
+
+        animatorSet  = new AnimatorSet();
+
+        this.startPointF = startPointF;
+        this.overPointF = overPointF;
+
+        setAnim(animTime,false);
+        return this;
+    }
+
+    /**
+     * 设置动画
+     * @param type
+     * value true 计算状态栏高度 false 不计算
+     * */
+    private void setAnim(int animTime,final boolean type){
         ValueAnimator valueAnimator = ValueAnimator.ofObject(new BezierEvaluator(), startPointF, overPointF);
         valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener()
         {
@@ -95,7 +188,11 @@ public class CarAddView extends FrameLayout {
             {
                 PointF pointF = (PointF) animation.getAnimatedValue();
                 mView.setX(pointF.x);
-                mView.setY(pointF.y);
+                if(type) {
+                    mView.setY(pointF.y - statusHeight);
+                }else{
+                    mView.setY(pointF.y);
+                }
             }
         });
         valueAnimator.addListener(new Animator.AnimatorListener()
@@ -121,7 +218,6 @@ public class CarAddView extends FrameLayout {
                 valueAnimator
         );
         animatorSet.setDuration(animTime);
-        return this;
     }
 
 }
