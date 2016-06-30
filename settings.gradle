@@ -1,1 +1,1 @@
-include ':app', ':vanimator2', ':vanimator'
+include ':vanimator', ':testmain'

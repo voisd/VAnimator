@@ -1,4 +1,4 @@
-package com.voisd.vanimator;
+package com.voisd.testmain;
 
 import org.junit.Test;
 

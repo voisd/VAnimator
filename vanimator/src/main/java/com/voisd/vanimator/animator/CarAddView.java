@@ -175,9 +175,8 @@ public class CarAddView extends FrameLayout {
     }
 
     /**
-     * 设置动画
      * @param type
-     * value true 计算状态栏高度 false 不计算
+     * value true statusWingows height false:no true yes
      * */
     private void setAnim(int animTime,final boolean type){
         ValueAnimator valueAnimator = ValueAnimator.ofObject(new BezierEvaluator(), startPointF, overPointF);

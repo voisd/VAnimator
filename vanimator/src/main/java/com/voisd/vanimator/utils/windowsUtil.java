@@ -8,7 +8,7 @@ import android.content.Context;
 public class WindowsUtil {
 
     /**
-     * 获得状态栏的高度
+     * getStatuswindows height
      * @param context
      * @return
      */

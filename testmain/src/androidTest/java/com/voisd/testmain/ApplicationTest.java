@@ -1,4 +1,4 @@
-package com.voisd.vanimator;
+package com.voisd.testmain;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;
